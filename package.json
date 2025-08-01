@@ -53,6 +53,7 @@
   "scripts": {
     "start": "npm run app-dev",
     "app-build": "tauri build",
+    "app-build-local": "tauri build --config ./src-tauri/tauri-local.conf.json",
     "app-dev": "tauri dev --no-watch --config ./src-tauri/tauri-dev.conf.json",
     "migration": "node scripts/create-migration.cjs",
     "build": "npm run --workspaces --if-present build",

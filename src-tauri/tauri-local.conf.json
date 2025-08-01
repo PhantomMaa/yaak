@@ -1,0 +1,31 @@
+{
+  "productName": "Yaak",
+  "identifier": "app.yaak.desktop.local",
+  "bundle": {
+    "createUpdaterArtifacts": false,
+    "macOS": {
+      "minimumSystemVersion": "13.0",
+      "exceptionDomain": "",
+      "entitlements": "macos/entitlements.plist",
+      "frameworks": []
+    },
+    "externalBin": [
+      "vendored/node/yaaknode"
+    ],
+    "resources": [
+      "vendored/plugin-runtime",
+      "vendored/plugins"
+    ]
+  },
+  "plugins": {
+    "updater": {
+      "active": false
+    }
+  },
+  "build": {
+    "beforeBuildCommand": "npm run build-plugins && mkdir -p vendored/node && rm -f vendored/node/yaaknode* && cp /opt/homebrew/bin/node vendored/node/yaaknode-aarch64-apple-darwin",
+    "beforeDevCommand": "npm run tauri-before-dev",
+    "devUrl": "http://localhost:1420",
+    "frontendDist": "../dist"
+  }
+}

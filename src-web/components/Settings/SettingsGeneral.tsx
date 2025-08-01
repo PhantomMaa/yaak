@@ -4,7 +4,6 @@ import { useAtomValue } from 'jotai';
 import React from 'react';
 import { activeWorkspaceAtom } from '../../hooks/useActiveWorkspace';
 import { appInfo } from '../../lib/appInfo';
-import { useCheckForUpdates } from '../../hooks/useCheckForUpdates';
 import { revealInFinderText } from '../../lib/reveal';
 import { Checkbox } from '../core/Checkbox';
 import { Heading } from '../core/Heading';
@@ -18,7 +17,6 @@ import { VStack } from '../core/Stacks';
 export function SettingsGeneral() {
   const workspace = useAtomValue(activeWorkspaceAtom);
   const settings = useAtomValue(settingsAtom);
-  const checkForUpdates = useCheckForUpdates();
 
   if (settings == null || workspace == null) {
     return null;
@@ -26,29 +24,6 @@ export function SettingsGeneral() {
 
   return (
     <VStack space={1.5} className="mb-4">
-      <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-1">
-        <Select
-          name="updateChannel"
-          label="Update Channel"
-          labelPosition="left"
-          labelClassName="w-[14rem]"
-          size="sm"
-          value={settings.updateChannel}
-          onChange={(updateChannel) => patchModel(settings, { updateChannel })}
-          options={[
-            { label: 'Stable', value: 'stable' },
-            { label: 'Beta (more frequent)', value: 'beta' },
-          ]}
-        />
-        <IconButton
-          variant="border"
-          size="sm"
-          title="Check for updates"
-          icon="refresh"
-          spin={checkForUpdates.isPending}
-          onClick={() => checkForUpdates.mutateAsync()}
-        />
-      </div>
       <Select
         name="switchWorkspaceBehavior"
         label="Workspace Window Behavior"

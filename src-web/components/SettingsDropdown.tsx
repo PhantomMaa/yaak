@@ -2,7 +2,6 @@ import { openUrl } from '@tauri-apps/plugin-opener';
 import { useLicense } from '@yaakapp-internal/license';
 import { useRef } from 'react';
 import { openSettings } from '../commands/openSettings';
-import { useCheckForUpdates } from '../hooks/useCheckForUpdates';
 import { useExportData } from '../hooks/useExportData';
 import { appInfo } from '../lib/appInfo';
 import { showDialog } from '../lib/dialog';
@@ -16,7 +15,6 @@ import { KeyboardShortcutsDialog } from './KeyboardShortcutsDialog';
 export function SettingsDropdown() {
   const exportData = useExportData();
   const dropdownRef = useRef<DropdownRef>(null);
-  const checkForUpdates = useCheckForUpdates();
   const { check } = useLicense();
 
   return (
@@ -64,18 +62,6 @@ export function SettingsDropdown() {
           onSelect: () => openUrl('https://yaak.app/button/new'),
         },
         { type: 'separator', label: `Yaak v${appInfo.version}` },
-        {
-          label: 'Purchase License',
-          color: 'success',
-          hidden: check.data == null || check.data.type === 'commercial_use',
-          leftSlot: <Icon icon="circle_dollar_sign" />,
-          onSelect: () => openSettings.mutate('license'),
-        },
-        {
-          label: 'Check for Updates',
-          leftSlot: <Icon icon="update" />,
-          onSelect: () => checkForUpdates.mutate(),
-        },
         {
           label: 'Feedback',
           leftSlot: <Icon icon="chat" />,
